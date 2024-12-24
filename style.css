@@ -21,7 +21,6 @@
   width: 100vw;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
 }
 
@@ -38,6 +37,8 @@
   border-left: 0;
   border-radius: 25px;
   transition: 0.4s ease-in-out;
+  max-width: 20em;
+  min-width: 20em;
 }
 
 .form:hover {
@@ -48,7 +49,7 @@
   text-align: center;
   padding-bottom: 2em;
   color: rgb(0, 0, 0);
-  font-size: 1.2em;
+  font-size: 1.5em;
   font-weight: bold;
 }
 
@@ -57,13 +58,9 @@
   align-items: center;
   justify-content: center;
   gap: 0.5em;
-  border-radius: 0 15px;
-  padding: 0.6em;
   border: none;
   outline: none;
   color: white;
-  background-color: #ffffff8c;
-  box-shadow: inset 2px 5px 10px rgb(184, 184, 184);
 }
 
 .input-field {
@@ -73,6 +70,10 @@
   width: 100%;
   color: #000000;
   font-weight: bold;
+  padding: 0.6em;
+  background-color: #ffffff8c;
+  box-shadow: inset 2px 5px 10px rgb(184, 184, 184);
+  border-radius: 0 15px;
 }
 
 /* weather detail */
@@ -82,16 +83,23 @@
   flex-direction: column;
   text-align: center;
   gap: 3em;
+  padding: 2em;
+  backdrop-filter: blur(0.2em);
+  background-color: #ffffff31;
+  border: 2px white solid;
+  border-bottom: 0;
+  border-left: 0;
+  border-radius: 25px;
+  max-width: 20em;
+  min-width: 20em;
 }
 
 .weather-detail-bolds {
-  font-size: 3em;
-  text-shadow: 2px 2px 1px white;
+  font-size: 2.25em;
   font-weight: bold;
 }
 .weather-detail-normals {
   font-size: 1em;
-  text-shadow: 1px 1px 1px white;
   font-weight: bold;
 }
 
