@@ -1,8 +1,18 @@
 const form = document.getElementById("weather-form");
 const formInput = document.getElementById("weather-input");
 const weatherDetail = document.getElementById("weather-detail");
+const bgImage = document.querySelector(".img-background")
 
 const apiKey = "35260a6010a72194c616b209e339db17";
+const images = {
+    clear: "./assests/photos/clear.jpg",
+    cloud: "./assests/photos/cloud.jpg",
+    drizzle: "./assests/photos/drizzle.jpg",
+    thunderstorm: "./assests/photos/thunderstorm.jpg",
+    rain: "./assests/photos/rain.jpg",
+    snow: "./assests/photos/snow.jpg",
+    other: "./assests/photos/haze.jpg",
+}
 
 // Fetch weather data by location
 async function getWeatherByLocation(location) {
@@ -32,11 +42,34 @@ function hideDetailInfo() {
     weatherDetail.classList.add("hidden");
 }
 
+function getWeatherImage(weatherDescription) {
+    const normalizedDescription = weatherDescription.toLowerCase();
+
+    switch (true) {
+        case normalizedDescription.includes("cloud"):
+            return images.cloud;
+        case normalizedDescription.includes("rain"):
+            return images.rain;
+        case normalizedDescription.includes("clear"):
+            return images.clear;
+        case normalizedDescription.includes("snow"):
+            return images.snow;
+        case normalizedDescription.includes("drizzle"):
+            return images.drizzle;
+        case normalizedDescription.includes("thunderstorm"):
+            return images.thunderstorm;
+        default:
+            return images.other; // Default case
+    }
+}
+
 // Display weather information on the page
 function displayWeatherInfo(data) {
     const temperature = convertKelvinToCelsius(data.main.temp);
     const maxTemp = convertKelvinToCelsius(data.main.temp_max);
     const minTemp = convertKelvinToCelsius(data.main.temp_min);
+    const weatherDescription = data.weather[0]?.description || "unknown";;
+    bgImage.src = getWeatherImage(weatherDescription);
 
     weatherDetail.innerHTML = `
         <div>
