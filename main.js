@@ -68,13 +68,13 @@ function displayWeatherInfo(data) {
     const temperature = convertKelvinToCelsius(data.main.temp);
     const maxTemp = convertKelvinToCelsius(data.main.temp_max);
     const minTemp = convertKelvinToCelsius(data.main.temp_min);
-    const weatherDescription = data.weather[0]?.description || "unknown";;
+    const weatherDescription = data.weather[0]?.description || "unknown";
     bgImage.src = getWeatherImage(weatherDescription);
 
     weatherDetail.innerHTML = `
         <div>
             <h2 class="weather-detail-bolds">${data.sys.country} - ${data.name}</h2>
-            <p class="weather-detail-normals">sunday 22 Nov 2020</p>
+            <p class="weather-detail-normals">${new Date().getUTCFullYear()}/${new Date().getMonth()}/${new Date().getDay()}</p>
         </div>
         <div>
             <h1 class="weather-detail-bolds">${temperature}°C</h1>
