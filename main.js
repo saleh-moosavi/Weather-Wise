@@ -14,17 +14,23 @@ const images = {
     other: "./assests/photos/haze.jpg",
 }
 
+window.onload = function () {
+    formInput.focus()
+}
+
 // Fetch weather data by location
 async function getWeatherByLocation(location) {
     showLoader();
     try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}`);
-        const data = await response.json();
-        if (response.ok) {
-            displayWeatherInfo(data);
-        } else {
-            displayError("City not found");
-        }
+        if (formInput.value.length > 2) {
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}`);
+            if (response.ok) {
+                const data = await response.json();
+                displayWeatherInfo(data);
+            } else {
+                displayError("City not found");
+            }
+        } else { displayError("City must have more than 2 letter"); }
     } catch (error) {
         displayError("Error fetching data");
     }
