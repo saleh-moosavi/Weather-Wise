@@ -3,6 +3,15 @@ const formInput = document.getElementById("weather-input");
 const bgImage = document.getElementById("background-image");
 const weatherDetail = document.getElementById("weather-detail");
 
+// Get all text elements
+const dateText = document.getElementById("date-text");
+const minTempText = document.getElementById("min-temp-text");
+const maxTempText = document.getElementById("max-temp-text");
+const locationText = document.getElementById("location-text");
+const windSpeedText = document.getElementById("wind-speed-text");
+const temperatureText = document.getElementById("temperature-text");
+const descriptionText = document.getElementById("description-text");
+
 const apiKey = "35260a6010a72194c616b209e339db17";
 const baseUrl = "https://api.openweathermap.org/data/2.5/weather";
 
@@ -18,6 +27,7 @@ const images = {
 
 window.onload = function () {
   formInput.focus();
+  ResetValues();
 };
 
 // Fetch weather data by location
@@ -28,12 +38,12 @@ async function getWeatherByLocation(location) {
       const response = await fetch(`${baseUrl}?q=${location}&appid=${apiKey}`);
       if (response.ok) {
         const data = await response.json();
-        displayWeatherInfo(data);
+        updateWeatherInfo(data);
       } else {
         displayError("City not found");
       }
     } else {
-      displayError("City must have more than 2 letter");
+      displayError("City must have more than 2 letters");
     }
   } catch (error) {
     displayError("Error fetching data");
@@ -42,16 +52,10 @@ async function getWeatherByLocation(location) {
 
 // Show loader while fetching data
 function showLoader() {
-  weatherDetail.innerHTML = '<div class="custom-loader"></div>';
-  weatherDetail.classList.remove("hidden");
+  locationText.textContent = "Loading...";
 }
 
-// Hide weather details
-function hideDetailInfo() {
-  weatherDetail.innerHTML = "";
-  weatherDetail.classList.add("hidden");
-}
-
+// Change Background Image Based On Weather Description
 function getWeatherImage(weatherDescription) {
   const normalizedDescription = weatherDescription.toLowerCase();
 
@@ -69,42 +73,44 @@ function getWeatherImage(weatherDescription) {
     case normalizedDescription.includes("thunderstorm"):
       return images.thunderstorm;
     default:
-      return images.other; // Default case
+      return images.other;
   }
 }
 
-// Display weather information on the page
-function displayWeatherInfo(data) {
+// Update weather information by setting text values
+function updateWeatherInfo(data) {
   const temperature = convertKelvinToCelsius(data.main.temp);
   const maxTemp = convertKelvinToCelsius(data.main.temp_max);
   const minTemp = convertKelvinToCelsius(data.main.temp_min);
+
   const weatherDescription = data.weather[0]?.description || "unknown";
   bgImage.src = getWeatherImage(weatherDescription);
 
-  weatherDetail.innerHTML = `
-        <div>
-            <h2 class="weather-detail-bolds">${data.sys.country} - ${
-    data.name
-  }</h2>
-            <p class="weather-detail-normals">${new Date().getUTCFullYear()}/${new Date().getMonth()}/${new Date().getDay()}</p>
-        </div>
-        <div>
-            <h1 class="weather-detail-bolds">${temperature}°C</h1>
-            <p class="weather-detail-normals">Sky: ${
-              data.weather[0].description
-            }</p>
-        </div>
-        <div class="weather-detail-normals">
-            <p>Min Temp: ${minTemp}°C</p>
-            <p>Max Temp: ${maxTemp}°C</p>
-            <p>Wind Speed: ${data.wind.speed}</p>
-        </div>`;
-  weatherDetail.classList.remove("hidden");
+  minTempText.textContent = minTemp;
+  maxTempText.textContent = maxTemp;
+  windSpeedText.textContent = data.wind.speed;
+  temperatureText.textContent = `Temp : ${temperature}°C`;
+  locationText.textContent = `Country : ${data.sys.country} - ${data.name}`;
+  descriptionText.textContent = `Weather : ${data.weather[0].description}`;
 }
 
 // Display error message
 function displayError(message) {
-  weatherDetail.innerHTML = message;
+  ResetValues();
+  locationText.textContent = message;
+}
+
+// Reset Values Of Weather Details
+function ResetValues() {
+  dateText.textContent = `${new Date().getUTCFullYear()}/${
+    new Date().getMonth() + 1
+  }/${new Date().getDate()}`;
+  minTempText.textContent = ".....";
+  maxTempText.textContent = ".....";
+  locationText.textContent = "Country : ...";
+  windSpeedText.textContent = ".....";
+  temperatureText.textContent = "Temp : ...°C";
+  descriptionText.textContent = "Weather : ...";
 }
 
 // Convert Kelvin to Celsius
@@ -112,15 +118,12 @@ function convertKelvinToCelsius(temp) {
   return Math.round(temp - 273.15);
 }
 
-// Event listeners for form submission and input
-form.addEventListener("submit", (e) => {
+const formHandler = (e) => {
   e.preventDefault();
   const location = formInput.value.trim();
   location ? getWeatherByLocation(location) : hideDetailInfo();
-});
+};
 
-formInput.addEventListener("input", (e) => {
-  e.preventDefault();
-  const location = formInput.value.trim();
-  location ? getWeatherByLocation(location) : hideDetailInfo();
-});
+// Event listeners for form submission and input
+form.addEventListener("submit", formHandler);
+formInput.addEventListener("input", formHandler);

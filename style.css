@@ -5,9 +5,8 @@
 }
 
 /* background section css */
-
 #background-image {
-  position: absolute;
+  position: fixed;
   z-index: -50;
   height: 100vh;
   width: 100vw;
@@ -81,8 +80,7 @@
   margin-top: 5em;
   display: flex;
   flex-direction: column;
-  text-align: center;
-  align-items: center;
+  align-items: start;
   gap: 3em;
   padding: 2em;
   backdrop-filter: blur(0.2em);
@@ -97,31 +95,26 @@
 }
 
 .weather-detail-bolds {
-  font-size: 2.25em;
+  font-size: 1.5em;
 }
 
 .weather-detail-normals {
   font-size: 1em;
 }
 
-.hidden {
-  visibility: hidden;
+#weather-detail.hidden {
+  display: none;
 }
 
-/* Loader Css */
-.custom-loader {
-  width: 50px;
-  height: 50px;
-  --c: radial-gradient(farthest-side, #000000 92%, #0000);
-  background: var(--c) 50% 0, var(--c) 50% 100%, var(--c) 100% 50%,
-    var(--c) 0 50%;
-  background-size: 12px 12px;
-  background-repeat: no-repeat;
-  animation: s7 1s infinite;
+.weather-detail-bolds {
+  font-weight: bold;
 }
 
-@keyframes s7 {
-  to {
-    transform: rotate(0.5turn);
-  }
+.weather-detail-normals {
+  font-weight: normal;
+}
+
+#weather-detail.loading h2 {
+  color: #666;
+  font-style: italic;
 }

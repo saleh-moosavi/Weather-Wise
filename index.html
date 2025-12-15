@@ -19,7 +19,21 @@
           />
         </div>
       </form>
-      <article id="weather-detail" class="hidden"></article>
+      <article id="weather-detail">
+        <div>
+          <h2 class="weather-detail-bolds" id="location-text"></h2>
+          <p class="weather-detail-normals" id="date-text"></p>
+        </div>
+        <div>
+          <h1 class="weather-detail-bolds" id="temperature-text"></h1>
+          <p class="weather-detail-normals" id="description-text"></p>
+        </div>
+        <div class="weather-detail-normals">
+          <p>Min Temp : <span id="min-temp-text"></span></p>
+          <p>Max Temp : <span id="max-temp-text"></span></p>
+          <p>Wind Speed : <span id="wind-speed-text"></span></p>
+        </div>
+      </article>
     </section>
 
     <script src="main.js" defer></script>
