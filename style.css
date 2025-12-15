@@ -6,7 +6,7 @@
 
 /* background section css */
 
-.img-background {
+#background-image {
   position: absolute;
   z-index: -50;
   height: 100vh;
@@ -16,15 +16,15 @@
 }
 
 /* form section css */
-.form-container {
+#form-container {
   height: 100vh;
   width: 100vw;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
 }
 
-.form {
+#weather-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -41,7 +41,7 @@
   min-width: 20em;
 }
 
-.form:hover {
+#weather-form:hover {
   transform: scale(1.05);
 }
 
@@ -53,7 +53,7 @@
   font-weight: bold;
 }
 
-.field {
+#field {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,7 +63,7 @@
   color: white;
 }
 
-.input-field {
+#weather-input {
   background: none;
   border: none;
   outline: none;
@@ -99,6 +99,7 @@
 .weather-detail-bolds {
   font-size: 2.25em;
 }
+
 .weather-detail-normals {
   font-size: 1em;
 }
@@ -118,6 +119,7 @@
   background-repeat: no-repeat;
   animation: s7 1s infinite;
 }
+
 @keyframes s7 {
   to {
     transform: rotate(0.5turn);

@@ -7,22 +7,21 @@
     <title>Weather-Wise</title>
   </head>
   <body>
-    <img class="img-background" src="./assests/photos/clear.jpg" />
-    <section class="form-container">
-      <form class="form" id="weather-form">
+    <img id="background-image" src="./assets/photos/clear.jpg" />
+    <section id="form-container">
+      <form id="weather-form">
         <p id="heading">Weather-Wise</p>
-        <div class="field">
+        <div id="field">
           <input
+            type="text"
             id="weather-input"
             placeholder="Enter your city name ..."
-            class="input-field"
-            type="text"
           />
         </div>
       </form>
       <article id="weather-detail" class="hidden"></article>
     </section>
 
-    <script src="./main.js"></script>
+    <script src="main.js" defer></script>
   </body>
 </html>
