@@ -12,6 +12,8 @@ const windSpeedText = document.getElementById("wind-speed-text");
 const temperatureText = document.getElementById("temperature-text");
 const descriptionText = document.getElementById("description-text");
 
+let debounceRef = null;
+let previousValue = "";
 const apiKey = "35260a6010a72194c616b209e339db17";
 const baseUrl = "https://api.openweathermap.org/data/2.5/weather";
 
@@ -25,8 +27,8 @@ const images = {
   thunderstorm: "./assets/photos/thunderstorm.jpg",
 };
 
+// Light Animation In Background
 const animate = document.getElementById("animate");
-
 const animation = () => {
   let windowWidth = window.innerWidth;
   let WindowHeight = window.innerHeight;
@@ -45,9 +47,10 @@ window.onload = function () {
 
 // Fetch weather data by location
 async function getWeatherByLocation(location) {
+  if (debounceRef !== null) clearTimeout(debounceRef);
   showLoader();
-  try {
-    if (formInput.value.length > 2) {
+  debounceRef = setTimeout(async () => {
+    try {
       const response = await fetch(`${baseUrl}?q=${location}&appid=${apiKey}`);
       if (response.ok) {
         const data = await response.json();
@@ -55,12 +58,10 @@ async function getWeatherByLocation(location) {
       } else {
         displayError("City not found");
       }
-    } else {
-      displayError("...");
+    } catch (error) {
+      displayError("Error fetching data");
     }
-  } catch (error) {
-    displayError("Error fetching data");
-  }
+  }, 500);
 }
 
 // Show loader while fetching data
@@ -120,10 +121,10 @@ function ResetValues() {
   }/${new Date().getDate()}`;
   minTempText.textContent = ".....";
   maxTempText.textContent = ".....";
-  locationText.textContent = "...";
+  locationText.textContent = ".....";
   windSpeedText.textContent = ".....";
-  temperatureText.textContent = "...";
-  descriptionText.textContent = "...";
+  temperatureText.textContent = ".....";
+  descriptionText.textContent = ".....";
 }
 
 // Convert Kelvin to Celsius
@@ -134,7 +135,12 @@ function convertKelvinToCelsius(temp) {
 const formHandler = (e) => {
   e.preventDefault();
   const location = formInput.value.trim();
-  location && getWeatherByLocation(location);
+  if (location === previousValue) {
+    return;
+  } else {
+    previousValue = location;
+  }
+  location && location.length > 2 && getWeatherByLocation(location);
 };
 
 // Event listeners for form submission and input
