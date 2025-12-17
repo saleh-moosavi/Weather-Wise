@@ -25,9 +25,22 @@ const images = {
   thunderstorm: "./assets/photos/thunderstorm.jpg",
 };
 
+const animate = document.getElementById("animate");
+
+const animation = () => {
+  let windowWidth = window.innerWidth;
+  let WindowHeight = window.innerHeight;
+  setInterval(() => {
+    animate.style.top = Math.random() * WindowHeight + "px";
+    animate.style.left = Math.random() * windowWidth + "px";
+    animate.style.transitionDuration = Math.random() * 5 + "s";
+  }, 3000);
+};
+
 window.onload = function () {
   formInput.focus();
   ResetValues();
+  animation();
 };
 
 // Fetch weather data by location
@@ -43,7 +56,7 @@ async function getWeatherByLocation(location) {
         displayError("City not found");
       }
     } else {
-      displayError("City must have more than 2 letters");
+      displayError("...");
     }
   } catch (error) {
     displayError("Error fetching data");
@@ -83,15 +96,15 @@ function updateWeatherInfo(data) {
   const maxTemp = convertKelvinToCelsius(data.main.temp_max);
   const minTemp = convertKelvinToCelsius(data.main.temp_min);
 
-  const weatherDescription = data.weather[0]?.description || "unknown";
-  bgImage.src = getWeatherImage(weatherDescription);
+  // const weatherDescription = data.weather[0]?.description || "unknown";
+  // bgImage.src = getWeatherImage(weatherDescription);
 
   minTempText.textContent = minTemp;
   maxTempText.textContent = maxTemp;
   windSpeedText.textContent = data.wind.speed;
-  temperatureText.textContent = `Temp : ${temperature}°C`;
-  locationText.textContent = `Country : ${data.sys.country} - ${data.name}`;
-  descriptionText.textContent = `Weather : ${data.weather[0].description}`;
+  temperatureText.textContent = `${temperature}`;
+  locationText.textContent = `${data.sys.country} - ${data.name}`;
+  descriptionText.textContent = `${data.weather[0].description}`;
 }
 
 // Display error message
@@ -107,10 +120,10 @@ function ResetValues() {
   }/${new Date().getDate()}`;
   minTempText.textContent = ".....";
   maxTempText.textContent = ".....";
-  locationText.textContent = "Country : ...";
+  locationText.textContent = "...";
   windSpeedText.textContent = ".....";
-  temperatureText.textContent = "Temp : ...°C";
-  descriptionText.textContent = "Weather : ...";
+  temperatureText.textContent = "...";
+  descriptionText.textContent = "...";
 }
 
 // Convert Kelvin to Celsius
@@ -121,7 +134,7 @@ function convertKelvinToCelsius(temp) {
 const formHandler = (e) => {
   e.preventDefault();
   const location = formInput.value.trim();
-  location ? getWeatherByLocation(location) : hideDetailInfo();
+  location && getWeatherByLocation(location);
 };
 
 // Event listeners for form submission and input

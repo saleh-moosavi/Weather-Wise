@@ -7,33 +7,32 @@
     <title>Weather-Wise</title>
   </head>
   <body>
-    <img id="background-image" src="./assets/photos/clear.jpg" />
+    <div id="animate"></div>
     <section id="form-container">
-      <form id="weather-form">
-        <p id="heading">Weather-Wise</p>
-        <div id="field">
-          <input
-            type="text"
-            id="weather-input"
-            placeholder="Enter your city name ..."
-          />
-        </div>
-      </form>
-      <article id="weather-detail">
-        <div>
-          <h2 class="weather-detail-bolds" id="location-text"></h2>
-          <p class="weather-detail-normals" id="date-text"></p>
-        </div>
-        <div>
-          <h1 class="weather-detail-bolds" id="temperature-text"></h1>
-          <p class="weather-detail-normals" id="description-text"></p>
-        </div>
-        <div class="weather-detail-normals">
+      <div class="glass">
+        <form id="weather-form">
+          <article class="title-bar">
+            <p id="heading">Weather-Wise</p>
+            <h3 id="date-text"></h3>
+          </article>
+          <div id="field">
+            <input
+              type="text"
+              id="weather-input"
+              placeholder="Enter your city name ..."
+            />
+            <p>- City Name Must Be More Than 2 Letters</p>
+          </div>
+        </form>
+        <article id="weather-detail">
+          <p>Country : <span id="location-text"></span></p>
+          <p>Temp : <span id="temperature-text"></span>°C</p>
+          <p>Weather : <span id="description-text"></span></p>
           <p>Min Temp : <span id="min-temp-text"></span></p>
           <p>Max Temp : <span id="max-temp-text"></span></p>
           <p>Wind Speed : <span id="wind-speed-text"></span></p>
-        </div>
-      </article>
+        </article>
+      </div>
     </section>
 
     <script src="main.js" defer></script>
