@@ -95,13 +95,31 @@ body {
   font-weight: bold;
 }
 
-#weather-detail>p {
+#icon-image {
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+}
+
+#weather-detail>div {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.extra-details {
+  display: grid;
+  gap: 1rem;
+}
+
+.extra-details>p {
   color: rgb(187, 179, 255);
 }
 
-#weather-detail.loading h2 {
-  color: #666;
-  font-style: italic;
+#weather-detail>p {
+  color: rgb(187, 179, 255);
 }
 
 #date-text {

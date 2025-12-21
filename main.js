@@ -1,6 +1,6 @@
 const form = document.getElementById("weather-form");
+const bgImage = document.getElementById("icon-image");
 const formInput = document.getElementById("weather-input");
-const bgImage = document.getElementById("background-image");
 const weatherDetail = document.getElementById("weather-detail");
 
 // Get all text elements
@@ -18,13 +18,13 @@ const apiKey = "35260a6010a72194c616b209e339db17";
 const baseUrl = "https://api.openweathermap.org/data/2.5/weather";
 
 const images = {
-  rain: "./assets/photos/rain.jpg",
-  snow: "./assets/photos/snow.jpg",
-  other: "./assets/photos/haze.jpg",
-  clear: "./assets/photos/clear.jpg",
-  cloud: "./assets/photos/cloud.jpg",
-  drizzle: "./assets/photos/drizzle.jpg",
-  thunderstorm: "./assets/photos/thunderstorm.jpg",
+  rain: "./assets/photos/rain.png",
+  snow: "./assets/photos/snow.png",
+  other: "./assets/photos/haze.png",
+  clear: "./assets/photos/clear.png",
+  cloud: "./assets/photos/cloud.png",
+  drizzle: "./assets/photos/drizzle.png",
+  thunderstorm: "./assets/photos/thunderstorm.png",
 };
 
 // Light Animation In Background
@@ -40,6 +40,7 @@ const animation = () => {
 };
 
 window.onload = function () {
+  setIsImageVisible(false);
   formInput.focus();
   ResetValues();
   animation();
@@ -57,9 +58,11 @@ async function getWeatherByLocation(location) {
         updateWeatherInfo(data);
       } else {
         displayError("City not found");
+        setIsImageVisible(false);
       }
     } catch (error) {
       displayError("Error fetching data");
+      setIsImageVisible(false);
     }
   }, 500);
 }
@@ -67,6 +70,10 @@ async function getWeatherByLocation(location) {
 // Show loader while fetching data
 function showLoader() {
   locationText.textContent = "Loading...";
+}
+
+function setIsImageVisible(status = true) {
+  bgImage.style.visibility = status === true ? "visible" : "hidden";
 }
 
 // Change Background Image Based On Weather Description
@@ -97,8 +104,9 @@ function updateWeatherInfo(data) {
   const maxTemp = convertKelvinToCelsius(data.main.temp_max);
   const minTemp = convertKelvinToCelsius(data.main.temp_min);
 
-  // const weatherDescription = data.weather[0]?.description || "unknown";
-  // bgImage.src = getWeatherImage(weatherDescription);
+  const weatherDescription = data.weather[0]?.description || "unknown";
+  bgImage.src = getWeatherImage(weatherDescription);
+  setIsImageVisible(true);
 
   minTempText.textContent = minTemp;
   maxTempText.textContent = maxTemp;
